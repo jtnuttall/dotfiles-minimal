@@ -70,11 +70,12 @@ SPACESHIP_VI_MODE_COLOR_NORMAL=208
 # --- Plugins ---
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
-zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-history-substring-search
 
-zinit light spaceship-prompt/spaceship-prompt
 zinit light spaceship-prompt/spaceship-vi-mode
+zinit light spaceship-prompt/spaceship-prompt
+
+zinit light zdharma-continuum/fast-syntax-highlighting
 
 # --- Completion (after plugins so their completions register) ---
 autoload -Uz compinit && compinit
