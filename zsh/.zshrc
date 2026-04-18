@@ -34,47 +34,20 @@ function _host_color() {
 }
 HOST_COLOR=$(_host_color)
 
-# --- Spaceship configuration (MUST be set before spaceship loads) ---
-SPACESHIP_PROMPT_ORDER=(
-  user          # always show username
-  host          # always show hostname (colored per-host)
-  dir           # current directory
-  git           # branch + dirty/ahead/behind indicators
-  exec_time     # only appears for commands >5s
-  line_sep      # newline before prompt symbol
-  vi_mode       # [I] / [N] indicator
-  exit_code     # only appears on non-zero exit
-  char          # prompt symbol
-)
-
-# Always show user@host, even when not SSHed
-SPACESHIP_USER_SHOW=always
-SPACESHIP_HOST_SHOW=always
-SPACESHIP_HOST_COLOR=$HOST_COLOR
-
-# Visual tweaks
-SPACESHIP_USER_COLOR=245
-SPACESHIP_DIR_COLOR=yellow
-SPACESHIP_GIT_BRANCH_COLOR=magenta
-SPACESHIP_GIT_STATUS_COLOR=red
-SPACESHIP_CHAR_SYMBOL='❯ '
-SPACESHIP_CHAR_SUCCESS_COLOR=green
-SPACESHIP_CHAR_FAILURE_COLOR=red
-
-# Vi mode styling
-SPACESHIP_VI_MODE_INSERT='[I]'
-SPACESHIP_VI_MODE_NORMAL='[N]'
-SPACESHIP_VI_MODE_COLOR_INSERT=green
-SPACESHIP_VI_MODE_COLOR_NORMAL=208
-
 # --- Plugins ---
+# Order matters: widget-defining plugins before widget-wrapping ones
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-history-substring-search
 
-zinit light spaceship-prompt/spaceship-vi-mode
-zinit light spaceship-prompt/spaceship-prompt
+# OMZ libs that gentoo depends on
+zinit snippet OMZL::git.zsh
+zinit snippet OMZL::theme-and-appearance.zsh
 
+# The gentoo theme
+zinit snippet OMZT::gentoo
+
+# Syntax highlighting must load last (wraps all previously defined widgets)
 zinit light zdharma-continuum/fast-syntax-highlighting
 
 # --- Completion (after plugins so their completions register) ---
@@ -83,11 +56,35 @@ zinit cdreplay -q
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' menu select
 
-# --- Aliases ---
-alias ll='ls -lah --color=auto'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias grep='grep --color=auto'
-
-# --- Host-specific overrides ---
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+# # --- Prompt customization (must come AFTER theme loads) ---
+# # Repaint hostname with our per-host color, bold it for prominence
+# PROMPT="${PROMPT//\%m/%F{$HOST_COLOR}%B%m%b%f}"
+#
+# # Shorten path: ~ for home, last 3 dirs only (servers have deep paths)
+# PROMPT="${PROMPT//\%~/%3~}"
+#
+# # Exit status indicator: color the % red on failure, keep white on success
+# PROMPT="${PROMPT//\%\#/%(?.%F{white\}.%F{red\})%#%f}"
+#
+# # --- Vi mode indicator in right prompt ---
+# VIMODE='%F{green}[I]%f'
+# function zle-keymap-select {
+#   case $KEYMAP in
+#     vicmd)      VIMODE='%F{208}[N]%f' ;;
+#     main|viins) VIMODE='%F{green}[I]%f' ;;
+#   esac
+#   zle reset-prompt
+# }
+# zle -N zle-keymap-select
+# function zle-line-init { VIMODE='%F{green}[I]%f'; zle -K viins }
+# zle -N zle-line-init
+# RPROMPT='$VIMODE'
+#
+# # --- Aliases ---
+# alias ll='ls -lah --color=auto'
+# alias ..='cd ..'
+# alias ...='cd ../..'
+# alias grep='grep --color=auto'
+#
+# # --- Host-specific overrides ---
+# [ -f ~/.zshrc.local ] && source ~/.zshrc.local
