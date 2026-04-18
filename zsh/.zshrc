@@ -56,35 +56,35 @@ zinit cdreplay -q
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' menu select
 
-# # --- Prompt customization (must come AFTER theme loads) ---
-# # Repaint hostname with our per-host color, bold it for prominence
-# PROMPT="${PROMPT//\%m/%F{$HOST_COLOR}%B%m%b%f}"
-#
-# # Shorten path: ~ for home, last 3 dirs only (servers have deep paths)
-# PROMPT="${PROMPT//\%~/%3~}"
-#
-# # Exit status indicator: color the % red on failure, keep white on success
-# PROMPT="${PROMPT//\%\#/%(?.%F{white\}.%F{red\})%#%f}"
-#
-# # --- Vi mode indicator in right prompt ---
-# VIMODE='%F{green}[I]%f'
-# function zle-keymap-select {
-#   case $KEYMAP in
-#     vicmd)      VIMODE='%F{208}[N]%f' ;;
-#     main|viins) VIMODE='%F{green}[I]%f' ;;
-#   esac
-#   zle reset-prompt
-# }
-# zle -N zle-keymap-select
-# function zle-line-init { VIMODE='%F{green}[I]%f'; zle -K viins }
-# zle -N zle-line-init
-# RPROMPT='$VIMODE'
-#
-# # --- Aliases ---
-# alias ll='ls -lah --color=auto'
-# alias ..='cd ..'
-# alias ...='cd ../..'
-# alias grep='grep --color=auto'
-#
-# # --- Host-specific overrides ---
-# [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+# --- Prompt customization (must come AFTER theme loads) ---
+# Repaint hostname with our per-host color, bold it for prominence
+PROMPT="${PROMPT//\%m/%F{$HOST_COLOR}%B%m%b%f}"
+
+# Shorten path: ~ for home, last 3 dirs only (servers have deep paths)
+PROMPT="${PROMPT//\%~/%3~}"
+
+# Exit status indicator: color the % red on failure, keep white on success
+PROMPT="${PROMPT//\%\#/%(?.%F{white\}.%F{red\})%#%f}"
+
+# --- Vi mode indicator in right prompt ---
+VIMODE='%F{green}[I]%f'
+function zle-keymap-select {
+  case $KEYMAP in
+    vicmd)      VIMODE='%F{208}[N]%f' ;;
+    main|viins) VIMODE='%F{green}[I]%f' ;;
+  esac
+  zle reset-prompt
+}
+zle -N zle-keymap-select
+function zle-line-init { VIMODE='%F{green}[I]%f'; zle -K viins }
+zle -N zle-line-init
+RPROMPT='$VIMODE'
+
+# --- Aliases ---
+alias ll='ls -lah --color=auto'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias grep='grep --color=auto'
+
+# --- Host-specific overrides ---
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
