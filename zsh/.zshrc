@@ -82,4 +82,4 @@ gentoo_precmd() {
 autoload -U add-zsh-hook
 add-zsh-hook precmd gentoo_precmd
 
-PROMPT='%(!.%B%F{red}.%B%F{green}%n@)%m %F{blue}%(!.%1~.%~) ${vcs_info_msg_0_}%F{blue}%(!.#.$)%k%b%f '
+PROMPT='%B%(!.%F{red}.%F{green})%n@%F{$HOST_COLOR}%m%b%f %F{blue}%(!.%1~.%3~)%f ${vcs_info_msg_0_}%(?.%F{blue}.%F{red})%(!.#.$)%f%k%b '
