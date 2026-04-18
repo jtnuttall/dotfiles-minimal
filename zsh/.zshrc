@@ -1,5 +1,7 @@
 # ~/.zshrc
 
+echo "I can't blab such blibber blubber..."
+
 # --- Zinit bootstrap ---
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [ ! -d "$ZINIT_HOME" ]; then
@@ -83,3 +85,5 @@ autoload -U add-zsh-hook
 add-zsh-hook precmd gentoo_precmd
 
 PROMPT='%B%(!.%F{red}.%F{green})%n@%F{$HOST_COLOR}%m%b%f %F{blue}%(!.%1~.%3~)%f ${vcs_info_msg_0_}%(?.%F{blue}.%F{red})%(!.#.$)%f%k%b '
+
+echo "my tongue isn't made of rubber!"
